@@ -8,6 +8,7 @@ import CaptainOrUser from './components/CaptainOrUser';
 import captain from './assets/captain.png'
 import rider from './assets/user.webp'
 import AboutUser from './components/AboutUser';
+import Sidebar from './components/Sidebar';
 
 
 function App() {
@@ -52,6 +53,8 @@ function App() {
         {console.log(formData)}
         <Route path='/about' element={<AboutUser formData={formData} />}/>
         {console.log(formData)}
+
+        <Route path='/menu' element={<Sidebar/>}/>
       </Routes>
       </Router>
   )
