@@ -1,5 +1,7 @@
 import React from "react";
 import { useState,useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -102,7 +104,7 @@ function Sidebar() {
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 
-                <i class="fa-solid fa-handshake-angle" style={{color: '#9ca3af'}}></i>
+                <i className="fa-solid fa-handshake-angle" style={{color: '#9ca3af'}}></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">Help</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                   3
@@ -114,7 +116,7 @@ function Sidebar() {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i class="fa-regular fa-credit-card" style={{color: '#9ca3af'}}></i>
+                <i className="fa-regular fa-credit-card" style={{color: '#9ca3af'}}></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">Payments</span>
               </a>
             </li>
@@ -123,7 +125,7 @@ function Sidebar() {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i class="fa-solid fa-clock-rotate-left" style={{color: '#9ca3af'}}></i>
+                <i className="fa-solid fa-clock-rotate-left" style={{color: '#9ca3af'}}></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">My Rides</span>
               </a>
             </li>
@@ -132,7 +134,7 @@ function Sidebar() {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i class="fa-solid fa-indian-rupee-sign" style={{color: '#9ca3af'}}></i>
+                <i className="fa-solid fa-indian-rupee-sign" style={{color: '#9ca3af'}}></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">Refer and Earn</span>
               </a>
             </li>
@@ -141,20 +143,20 @@ function Sidebar() {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i class="fa-solid fa-bell" style={{color: '#9ca3af'}}></i>
+                <i className="fa-solid fa-bell" style={{color: '#9ca3af'}}></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">Notifications</span>
               </a>
             </li>
           </ul>
           <ul className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
             <li>
-              <a
-                href="#"
+              <Link
+                to="/about"
                 className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
               >
-                <i class="fa-solid fa-gear" style={{color: '#9ca3af'}}></i>
+                <i className="fa-solid fa-gear" style={{color: '#9ca3af'}}></i>
                 <span className="ms-3">Settings</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a

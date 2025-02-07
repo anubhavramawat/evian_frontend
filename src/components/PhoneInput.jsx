@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../External_css/PhoneOtp.css"
+import {login, getOtp} from './ApiRequests'
 
 
 function PhoneInput({ onSubmit }) {
@@ -12,6 +13,8 @@ function PhoneInput({ onSubmit }) {
     } else {
       alert("Please enter a valid phone number.");
     }
+    //login('emilys', 'emilyspass')
+    getOtp(phoneNumber, onSubmit)
   };
 
   return (

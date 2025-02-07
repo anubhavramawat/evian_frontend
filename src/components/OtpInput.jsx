@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../External_css/PhoneOtp.css"
+import { Link } from "react-router-dom";
+import { verifyOtp } from "./ApiRequests";
 
 function OtpInput({ phone, onSubmit }) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -18,11 +20,13 @@ function OtpInput({ phone, onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const otpCode = otp.join("");
-    if (otpCode.length === 6) {
-      onSubmit(otpCode);
-    } else {
-      alert("Please enter a valid OTP.");
-    }
+    verifyOtp(otpCode)
+    // if (otpCode.length === 6) {
+    //   onSubmit(otpCode);
+    // } else {
+    //   alert("Please enter a valid OTP.");
+    // }
+
   };
 
   return (
@@ -45,6 +49,7 @@ function OtpInput({ phone, onSubmit }) {
         </div>
         <button type="submit" className="btn">
           Submit
+          {/* <a href="/form">Submit</a> */}
         </button>
       </form>
       <p className="resend-link">Didn't receive the OTP? <a href="#">Resend</a></p>

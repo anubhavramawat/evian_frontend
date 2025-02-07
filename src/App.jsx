@@ -9,6 +9,7 @@ import captain from './assets/captain.png'
 import rider from './assets/user.webp'
 import AboutUser from './components/AboutUser';
 import Sidebar from './components/Sidebar';
+import Home from './components/Home';
 
 
 function App() {
@@ -28,7 +29,10 @@ function App() {
   const handleOtpSubmit = (otpCode) => {
     setOtp(otpCode);
     console.log("Verifying OTP:", otpCode);
-    alert("OTP Verified Successfully!");
+    //alert("OTP Verified Successfully!");
+    if (window.confirm("OTP Verified Successfully!")) {
+      window.location.href = "/form"; // Replace with your desired URL
+  }
   };
 
   return (
@@ -50,11 +54,9 @@ function App() {
         </div>}
         />
         <Route path='/form' element={<ProfileForm name={["Rider","Captain"]} setFormData={setFormData} />} />
-        {console.log(formData)}
         <Route path='/about' element={<AboutUser formData={formData} />}/>
-        {console.log(formData)}
-
         <Route path='/menu' element={<Sidebar/>}/>
+        <Route path='/home' element={<Home/>}/>
       </Routes>
       </Router>
   )
