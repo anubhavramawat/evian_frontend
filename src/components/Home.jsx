@@ -40,41 +40,11 @@ const Home = () => {
     }
   };
 
-  // useEffect(() => {
-  //   // Listen for location updates from other users
-  //   socket.on("receive_location", (location) => {
-  //     console.log(location);
-  //     setUserLocations((prevLocations) => [...prevLocations, location]);
-  //   });
-  //   return () => socket.off("receive_location");
-  // }, []);
-
   return (
     <div>
       <MapView location={location} userLocations={userLocations} sendLocation={sendLocation}/>
-      <RideDetailsPage/>
+      {/* <RideDetailsPage/> */}
     </div>
-    // <>
-    //  <Router>
-    //   <Routes>
-    //     <Route path="/" element={<MapView
-    //      location={location}
-    //       userLocations={userLocations}
-    //      sendLocation={sendLocation}
-    //    />} />
-    //     <Route path="/RideDetailsPage" element={<RideDetailsPage />} />
-    //   </Routes>
-    // </Router>
-    // </>
-
-    // <div className="h-screen flex flex-col">
-      
-    //   <MapView
-    //     location={location}
-    //     userLocations={userLocations}
-    //     sendLocation={sendLocation}
-    //   />
-    // </div>
   );
 };
 

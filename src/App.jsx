@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import PhoneInput from './components/PhoneInput'
 import OtpInput from './components/OtpInput'
-import "./style.css";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import "./index.css"
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import ProfileForm from './components/ProfileForm';
 import CaptainOrUser from './components/CaptainOrUser';
 import captain from './assets/captain.png'
@@ -10,7 +10,9 @@ import rider from './assets/user.webp'
 import AboutUser from './components/AboutUser';
 import Sidebar from './components/Sidebar';
 import Home from './components/Home';
-
+import RideDetailsPage from './components/mapcomponent/RideDetailsPage';
+import DriverLocation from './components/mapcomponent/DriverLocation';
+import Approve from './components/mapcomponent/Approve';
 
 function App() {
 
@@ -19,6 +21,11 @@ function App() {
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState({});
+
+  const location = useLocation(); // Get the current route
+
+  // Determine if styles should be applied
+  const shouldApplyStyles = location.pathname !== '/home' && location.pathname !== '/confirm' && location.pathname !== '/driver';
 
   const handlePhoneSubmit = (phoneNumber) => {
     setPhone(phoneNumber);
@@ -36,7 +43,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <div className={shouldApplyStyles ? "styled-container" : ""}>
       <Routes>
         <Route path='/' element={
           <div className="container">
@@ -57,9 +64,18 @@ function App() {
         <Route path='/about' element={<AboutUser formData={formData} />}/>
         <Route path='/menu' element={<Sidebar/>}/>
         <Route path='/home' element={<Home/>}/>
+        <Route path='/confirm' element={<RideDetailsPage/>}/>
+        <Route path='/driver' element={<DriverLocation/>}/>
+        <Route path='/approve' element={<Approve/>}/>
       </Routes>
-      </Router>
+      </div>
   )
 }
 
-export default App
+export default function Root(){
+  return(
+    <Router>
+      <App/>
+    </Router>
+  )
+}
