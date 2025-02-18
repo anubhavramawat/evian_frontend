@@ -1,7 +1,15 @@
-import React, { useState, useRef } from "react";
-import { GoogleMap, LoadScript, Marker, DirectionsRenderer, Autocomplete } from "@react-google-maps/api";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  DirectionsRenderer,
+  Autocomplete,
+} from "@react-google-maps/api";
 import DetailsPanel from "./DetailsPanel";
 import { useNavigate } from "react-router-dom";
+import { getlocation } from "../ApiRequests";
+import Sidebar from "../Sidebar";
 
 const containerStyle = {
   width: "100%",
@@ -29,6 +37,8 @@ const MapView = () => {
   const [startHeight, setStartHeight] = useState(0);
   const navigate = useNavigate();
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const geocodeLatLng = (coords, setAddressCallback) => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ location: coords }, (results, status) => {
@@ -40,7 +50,8 @@ const MapView = () => {
     });
   };
   const handleConfirmRide = () => {
-    navigate("/RideDetailsPage");
+    getlocation(currentLocation);
+    navigate("/confirm");
   };
   const locateCurrentPosition = () => {
     if (navigator.geolocation) {
@@ -56,7 +67,7 @@ const MapView = () => {
           setDirections(null);
           setShowDetails(false);
           generateRandomBikeMarkers(coords);
-  
+
           if (mapInstance) {
             mapInstance.panTo(coords);
             mapInstance.setZoom(15);
@@ -143,93 +154,123 @@ const MapView = () => {
   };
 
   return (
-    <div className="relative">
-      <LoadScript googleMapsApiKey="AIzaSyBeRVR_oODpdCjDbqyeH11sn07J9j6w6Gk" libraries={["places"]}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={currentLocation}
-          zoom={13}
-          onLoad={(map) => setMapInstance(map)}
-          options={{
-            disableDefaultUI: true,
-            mapTypeControl: false,
-          }}
-        >
-          {currentLocation && (
-  <Marker
-    position={currentLocation}
-    title="Drag to adjust location"
-    draggable={true} // Enable drag for marker
-    onDragEnd={(e) => {
-      const newCoords = {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-      };
-      setCurrentLocation(newCoords); // Update the new location
-      geocodeLatLng(newCoords, setCurrentAddress); // Reverse geocode for address
-    }}
-  />
-)}
-          {bikeMarkers.map((bike, index) => (
-            <Marker
-              key={index}
-              position={bike}
-              icon={{
-                url: "https://maps.google.com/mapfiles/kml/shapes/cycling.png",
-                scaledSize: new window.google.maps.Size(30, 30),
-              }}
-              title={`Bike ${index + 1}`}
-            />
-          ))}
-          {searchedLocation && <Marker position={searchedLocation} title="Destination" />}
-          {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap>
-        {/* Search Bar */}
-        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-72">
-           {/* Destination Input */}
-  <Autocomplete
-    onLoad={(ref) => (autocompleteRef.current = ref)}
-    onPlaceChanged={onPlaceChanged}
-  >
-    <input
-      type="text"
-      placeholder="Enter destination"
-      className="w-full h-10 px-3 rounded-lg border border-gray-300 shadow-md focus:outline-none"
-    />
-  </Autocomplete>
-
-  {/* Current Location Input */}
-  <input
-    type="text"
-    value={currentAddress}
-    onChange={(e) => setCurrentAddress(e.target.value)} // Editable fallback
-    className="w-full h-10 px-3 rounded-lg border border-gray-300 shadow-md bg-gray-100 focus:outline-none"
-    placeholder="Fetching current location..."
-    readOnly={!dragging} // Allow typing only if required
-  />
-        </div>
-        {/* Locate Button */}
-        <button
-          className="absolute bottom-16 right-5 rounded-full w-12 h-12 flex items-center justify-center shadow-lg bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold"
-          onClick={locateCurrentPosition}
-        >
-          📍
-        </button>
-        {showDetails && (
-          <DetailsPanel
-            currentAddress={currentAddress}
-            searchedAddress={searchedAddress}
-            panelHeight={panelHeight}
-            setPanelHeight={setPanelHeight}
-            setShowDetails={setShowDetails}
-            onDragStart={handleDragStart}
-            onDrag={handleDrag}
-            onDragEnd={handleDragEnd}
-            handleConfirmRide={handleConfirmRide}
-          />
-        )}
-      </LoadScript>
+    <>
+      {/* <div className="">
+      <button onClick={()=>isOpen(true)}>click me</button>
     </div>
+    {setIsOpen && <Sidebar/>} */}
+      <div className="relative z-40">
+        <LoadScript
+          googleMapsApiKey="AIzaSyBeRVR_oODpdCjDbqyeH11sn07J9j6w6Gk"
+          libraries={["places"]}
+        >
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={currentLocation}
+            zoom={13}
+            onLoad={(map) => setMapInstance(map)}
+            options={{
+              disableDefaultUI: true,
+              mapTypeControl: false,
+            }}
+          >
+            {currentLocation && (
+              <Marker
+                position={currentLocation}
+                title="Drag to adjust location"
+                draggable={true} // Enable drag for marker
+                onDragEnd={(e) => {
+                  const newCoords = {
+                    lat: e.latLng.lat(),
+                    lng: e.latLng.lng(),
+                  };
+                  setCurrentLocation(newCoords); // Update the new location
+                  geocodeLatLng(newCoords, setCurrentAddress); // Reverse geocode for address
+                }}
+              />
+            )}
+            {bikeMarkers.map((bike, index) => (
+              <Marker
+                key={index}
+                position={bike}
+                icon={{
+                  url: "https://maps.google.com/mapfiles/kml/shapes/cycling.png",
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+                title={`Bike ${index + 1}`}
+              />
+            ))}
+            {searchedLocation && (
+              <Marker position={searchedLocation} title="Destination" />
+            )}
+            {directions && <DirectionsRenderer directions={directions} />}
+          </GoogleMap>
+          {/* Search Bar */}
+          <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-72">
+            {/* Destination Input */}
+            <Autocomplete
+              onLoad={(ref) => (autocompleteRef.current = ref)}
+              onPlaceChanged={onPlaceChanged}
+            >
+              <div className="relative w-full">
+                <button onClick={()=>setIsOpen(true)}>
+                  <svg
+                    className="w-5 h-5 absolute -left-9 top-1/2 transform -translate-y-1/2 text-black-300"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      fillRule="evenodd"
+                      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                    ></path>
+                  </svg>
+                </button>
+                {isOpen && <Sidebar/>}
+
+                <input
+                  type="text"
+                  placeholder="Enter destination"
+                  className="w-full h-10 px-3 rounded-lg border border-gray-300 shadow-md focus:outline-none"
+                />
+              </div>
+            </Autocomplete>
+
+            {/* Current Location Input */}
+            <input
+              type="text"
+              value={currentAddress}
+              onChange={(e) => setCurrentAddress(e.target.value)} // Editable fallback
+              className="w-full h-10 px-3 rounded-lg border border-gray-300 shadow-md bg-gray-100 focus:outline-none"
+              placeholder="Fetching current location..."
+              readOnly={!dragging} // Allow typing only if required
+            />
+          </div>
+          {/* Locate Button */}
+          <button
+            className="absolute bottom-16 right-5 rounded-full w-12 h-12 flex items-center justify-center shadow-lg bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold"
+            onClick={locateCurrentPosition}
+          >
+            📍
+          </button>
+          {showDetails && (
+            <DetailsPanel
+              currentAddress={currentAddress}
+              searchedAddress={searchedAddress}
+              panelHeight={panelHeight}
+              setPanelHeight={setPanelHeight}
+              setShowDetails={setShowDetails}
+              onDragStart={handleDragStart}
+              onDrag={handleDrag}
+              onDragEnd={handleDragEnd}
+              handleConfirmRide={handleConfirmRide}
+            />
+          )}
+        </LoadScript>
+      </div>
+    </>
   );
 };
 
