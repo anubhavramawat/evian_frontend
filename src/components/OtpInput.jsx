@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../External_css/PhoneOtp.css"
+//import "../External_css/PhoneOtp.css"
 import { Link } from "react-router-dom";
 import { verifyOtp } from "./ApiRequests";
 
@@ -30,11 +30,11 @@ function OtpInput({ phone, onSubmit }) {
   };
 
   return (
-    <div className="card">
-      <h2>OTP Verification</h2>
+    <div className="bg-white p-5 rounded-lg shadow-md text-center">
+      <h2 className="mb-2 text-xl text-blue-600">OTP Verification</h2>
       <p>Enter the code we sent to {phone}</p>
       <form onSubmit={handleSubmit}>
-        <div className="otp-group">
+        <div className="flex justify-center gap-2 my-2">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -43,16 +43,16 @@ function OtpInput({ phone, onSubmit }) {
               maxLength="1"
               value={digit}
               onChange={(e) => handleChange(e.target.value, index)}
-              className="otp-input"
+              className="w-10 h-12 text-center text-xl border border-gray-300 rounded-md"
             />
           ))}
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="bg-blue-600 text-white border-none px-4 py-2 rounded-md cursor-pointer hover:bg-blue-700">
           Submit
           {/* <a href="/form">Submit</a> */}
         </button>
       </form>
-      <p className="resend-link">Didn't receive the OTP? <a href="#">Resend</a></p>
+      <p className="mt-2 text-sm">Didn't receive the OTP? <a className="text-blue-600 no-underline" href="#">Resend</a></p>
     </div>
   );
 }
