@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// export const login = async (username, password) => {
+//  export const login = async (username, password) => {
 //   try {
 //     // Make the POST request to the API
 //     const response = await axios.post('https://dummyjson.com/auth/login', {
@@ -125,5 +125,75 @@ export const getUsersData = async()=>{
   catch (error) {
     console.error('Error fetching user data:', error);
       throw error;
+  }
+}
+
+
+export const getlocation = async(currentLocation, searchedLocation)=>{
+  console.log(currentLocation, searchedLocation)
+  console.log(token);
+
+  try {
+    const[currentResponse, searchedResponse] = await Promise.all([
+      fetch('http://localhost:8080/api/v4.0/driverLoaction', {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(currentLocation)
+      }),
+      fetch('http://localhost:8080/api/v4.0/driverLoaction', {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(searchedLocation)
+      })
+    ])
+
+    const currentData = await currentResponse.text();
+    const searchedData = await searchedResponse.text();
+
+    console.log("Current Location Address:", currentData);
+    console.log("Destination Location Address:", searchedData);
+
+    // const response = await fetch('http://localhost:8080/api/v4.0/driverLoaction',{
+    //   method:"POST",
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`,
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(currentLocation)
+    // })
+    // if(response.ok){
+    //   const textData = await response.text();
+    //   console.log("Received Address:", textData);
+    // } 
+    // else {
+    //   console.error("API response error:", response.status, response.statusText);
+    // }
+
+    const rideResponse = await fetch('http://localhost:8080/api/v4.0/requestRide', {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        pickup_location: currentData,
+        dropLocation: searchedData
+      })
+    });
+
+    if (rideResponse.ok) {
+      const rideData = await rideResponse.json();
+      console.log("Ride Request Response:", rideData);
+    } else {
+      console.error("Error in requesting ride:", rideResponse.status, rideResponse.statusText);
+    }
+  } catch (error) {
+    console.error("Error in getting location:", error);
   }
 }

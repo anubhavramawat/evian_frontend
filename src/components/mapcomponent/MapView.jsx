@@ -50,7 +50,7 @@ const MapView = () => {
     });
   };
   const handleConfirmRide = () => {
-    getlocation(currentLocation);
+    getlocation(currentLocation, searchedLocation);
     navigate("/confirm");
   };
   const locateCurrentPosition = () => {
