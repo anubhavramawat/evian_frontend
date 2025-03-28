@@ -23,13 +23,18 @@ const Approve = () => {
     } catch (error) {
       console.error("Error fetching ride request:", error);
 
+      // Check if locations exist in localStorage
+      const storedPickup = localStorage.getItem("pickup") || "Connaught Place, Delhi";
+      const storedDrop = localStorage.getItem("drop") || "Indira Gandhi Airport, Delhi";
+      const searchedLocation = JSON.parse(localStorage.getItem("searchedLocation"))
+
       // *Ensure Dummy Data is Applied*
       setRideRequest({
-        pickup: "Connaught Place, Delhi",
-        drop: "Indira Gandhi Airport, Delhi",
+        pickup: storedPickup,
+        drop: storedDrop,
         fare: 250,
-        lat: 28.6329,
-        lng: 77.2195,
+        lat: searchedLocation.lat,
+        lng: searchedLocation.lng,
       });
     } finally {
       setLoading(false);

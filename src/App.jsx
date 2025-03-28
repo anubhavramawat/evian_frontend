@@ -13,6 +13,7 @@ import Home from './components/Home';
 import RideDetailsPage from './components/mapcomponent/RideDetailsPage';
 import DriverLocation from './components/mapcomponent/DriverLocation';
 import Approve from './components/mapcomponent/Approve';
+import AddPartner from './components/AddPartner';
 
 function App() {
 
@@ -67,6 +68,7 @@ function App() {
         <Route path='/confirm' element={<RideDetailsPage/>}/>
         <Route path='/driver' element={<DriverLocation/>}/>
         <Route path='/approve' element={<Approve/>}/>
+        <Route path='/addpartner' element={<AddPartner/>}/>
       </Routes>
       </div>
   )
