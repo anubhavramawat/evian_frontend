@@ -1,6 +1,7 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Logout } from "./ApiRequests";
 
 
 function Sidebar() {
@@ -159,8 +160,8 @@ function Sidebar() {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/" onClick={Logout}
                 className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
               >
                 <svg
@@ -179,7 +180,7 @@ function Sidebar() {
                   />
                 </svg>
                 <span className="ms-3">Log Out</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

@@ -132,6 +132,7 @@ export const getUsersData = async()=>{
 export const getlocation = async(currentLocation, searchedLocation)=>{
   console.log(currentLocation, searchedLocation)
   console.log(token);
+  localStorage.setItem("searchedLocation", JSON.stringify(searchedLocation))
 
   try {
     const[currentResponse, searchedResponse] = await Promise.all([
@@ -155,6 +156,9 @@ export const getlocation = async(currentLocation, searchedLocation)=>{
 
     const currentData = await currentResponse.text();
     const searchedData = await searchedResponse.text();
+
+    localStorage.setItem('pickup', currentData)
+    localStorage.setItem('drop', searchedData)
 
     console.log("Current Location Address:", currentData);
     console.log("Destination Location Address:", searchedData);
@@ -197,3 +201,48 @@ export const getlocation = async(currentLocation, searchedLocation)=>{
     console.error("Error in getting location:", error);
   }
 }
+
+
+export const Logout = async()=>{
+  try {
+    const response = await fetch('http://localhost:8080/api/v2.0/driverLogout',{
+      method:"POST",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+    })
+    if(response.ok){
+      const data = await response.json();
+      console.log(data);
+      alert('Logged out successfully')
+    }
+  } catch (error) {
+    console.error("Error in logging out:", error);
+  }
+}
+
+
+export const currentLocationProducer = async (currentLocation) => {
+  setTimeout(async () => {
+      try {
+          const response = await fetch('http://localhost:8080/api/v2.0/currentLocationProducer', {
+              method: "POST",
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(currentLocation)
+          });
+
+          if (response.ok) {
+              const data = await response.json();
+              console.log(data);
+          } else {
+              console.error("Failed to update location. Status:", response.status);
+          }
+      } catch (error) {
+          console.error("Error in updating current location:", error);
+      }
+  }, 10000)
+};

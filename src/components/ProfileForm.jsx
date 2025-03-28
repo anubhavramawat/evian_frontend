@@ -36,7 +36,7 @@ function ProfileForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="w-full max-w-xl h-screen p-4">
       <div className="grid md:grid-cols-2 md:gap-6">
         <div className="relative z-0 w-full mb-5 group">
           <input
@@ -97,40 +97,42 @@ function ProfileForm() {
 
       {role === "Captain" && (
         <>
-          <form class="mb-6">
-            <label
+          <div className="relative z-0 w-full mb-5 group">
+        <label
               htmlFor="countries"
-              class="block mb-2 text-sm font-medium text-gray-300"
+              className="block mb-2 text-sm font-medium text-gray-300"
             >
               Vehicle
             </label>
             <select
-              id="countries"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              id="vehicle"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option selected>Choose a Vehicle</option>
               <option value="bike">E-Bike</option>
               <option value="scooter">E-Scooter</option>
             </select>
-          </form>
-
-          <label
-            class="block mb-2 text-sm font-medium text-gray-300"
+        </div>
+          
+        <div className="relative z-0 w-full mb-5 group">
+        <label
+            className="block mb-2 text-sm font-medium text-gray-300"
             htmlFor="file_input"
           >
             Upload files (License and RC).
           </label>
           <input
-            class="block w-full text-sm mb-6 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            className="block w-full text-sm mb-6 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="file_input"
             type="file"
           ></input>
+        </div>
         </>
       )}
 
       <div className="relative z-0 w-full mb-5 group">
         <select
-            id="countries"
+            id="gender"
             name="gender"
             value={inputs.gender}
             onChange={handleChange}
