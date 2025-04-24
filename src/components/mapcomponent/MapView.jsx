@@ -161,7 +161,7 @@ const MapView = () => {
     {setIsOpen && <Sidebar/>} */}
       <div className="relative z-40">
         <LoadScript
-          googleMapsApiKey="AIzaSyBeRVR_oODpdCjDbqyeH11sn07J9j6w6Gk"
+          googleMapsApiKey="AIzaSyD3HAi9LH89IpmQ6s1euT1bHymBRuqxCmQ"
           libraries={["places"]}
         >
           <GoogleMap
@@ -213,7 +213,7 @@ const MapView = () => {
               onPlaceChanged={onPlaceChanged}
             >
               <div className="relative w-full">
-                <button onClick={()=>setIsOpen(true)}>
+                {/* <button onClick={()=>setIsOpen(true)}>
                   <svg
                     className="w-5 h-5 absolute -left-9 top-1/2 transform -translate-y-1/2 text-black-300"
                     aria-hidden="true"
@@ -227,8 +227,8 @@ const MapView = () => {
                       d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
                     ></path>
                   </svg>
-                </button>
-                {isOpen && <Sidebar/>}
+                </button> */}
+                {/* {isOpen && <Sidebar/>} */}
 
                 <input
                   type="text"
