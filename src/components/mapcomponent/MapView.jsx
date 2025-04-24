@@ -161,7 +161,7 @@ const MapView = () => {
     {setIsOpen && <Sidebar/>} */}
       <div className="relative z-40">
         <LoadScript
-          googleMapsApiKey="AIzaSyBeRVR_oODpdCjDbqyeH11sn07J9j6w6Gk"
+          googleMapsApiKey={import.meta.env.VITE_googleMapsApiKey}
           libraries={["places"]}
         >
           <GoogleMap
