@@ -246,3 +246,28 @@ export const currentLocationProducer = async (currentLocation) => {
       }
   }, 10000)
 };
+
+
+export const addpartner = async(inputs) => {
+        const formData = new FormData();
+        for (const key in inputs) {
+            formData.append(key, inputs[key]);
+            console.log(key, inputs[key])
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/api/v2.0/add/patners", {
+                method: "POST",
+                headers:{
+                  'Authorization': `Bearer ${token}`,
+                },
+                body: formData, // FormData auto-sets Content-Type
+            });
+
+            const result = await response.json();
+            alert("Driver registered Successfully")
+            console.log("Success:", result);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+}

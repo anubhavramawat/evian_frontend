@@ -32,7 +32,7 @@ function ProfileForm() {
     console.log(inputs)
     //getUsersData()
     addUser(inputs)
-    navigate("/menu")
+    navigate("/home")
   };
 
   return (

@@ -58,7 +58,7 @@ function App() {
         <Route path='/choose' element={
           <div>
           <CaptainOrUser image={rider} name={"Rider"}/>
-          <CaptainOrUser image={captain} name={"Captain"}/>
+          {/* <CaptainOrUser image={captain} name={"Captain"}/> */}
         </div>}
         />
         <Route path='/form' element={<ProfileForm name={["Rider","Captain"]} setFormData={setFormData} />} />
@@ -66,7 +66,7 @@ function App() {
         <Route path='/menu' element={<Sidebar/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/confirm' element={<RideDetailsPage/>}/>
-        <Route path='/driver' element={<DriverLocation/>}/>
+        {/* <Route path='/driver' element={<DriverLocation/>}/> */}
         <Route path='/approve' element={<Approve/>}/>
         <Route path='/addpartner' element={<AddPartner/>}/>
       </Routes>
